@@ -20,6 +20,9 @@ public class CarController : MonoBehaviour
     private float brakeTorque = 900;
     [SerializeField]
     private Rigidbody rigidbody;
+
+    [SerializeField]
+    private Transform steeringWheel;
     
     void Start()
     {
@@ -33,6 +36,9 @@ public class CarController : MonoBehaviour
         var steer = maxSteerAngle * Input.GetAxis("Horizontal");
         var torque = engineTorque * Input.GetAxis("Vertical");
         var brake = Input.GetKey(KeyCode.Space);
+
+        var steeeringWheelSteer = maxSteerAngle * 100 / 360 * steer;
+        this.steeringWheel.localRotation = Quaternion.Euler(-steeeringWheelSteer, 0, this.steeringWheel.rotation.z);
 
         for (int i = 0; i < wheelControllers.Length; i++)
         {
